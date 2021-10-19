@@ -33,7 +33,7 @@ public class VolumeCmd extends DJCommand
         super(bot);
         this.name = "volume";
         this.aliases = bot.getConfig().getAliases(this.name);
-        this.help = "sets or shows volume";
+        this.help = "establece o muestra el volumen";
         this.arguments = "[0-150]";
     }
 
@@ -45,7 +45,7 @@ public class VolumeCmd extends DJCommand
         int volume = handler.getPlayer().getVolume();
         if(event.getArgs().isEmpty())
         {
-            event.reply(FormatUtil.volumeIcon(volume)+" Current volume is `"+volume+"`");
+            event.reply(FormatUtil.volumeIcon(volume)+" El volumen actual es `"+volume+"`");
         }
         else
         {
@@ -56,12 +56,12 @@ public class VolumeCmd extends DJCommand
                 nvolume = -1;
             }
             if(nvolume<0 || nvolume>150)
-                event.reply(event.getClient().getError()+" Volume must be a valid integer between 0 and 150!");
+                event.reply(event.getClient().getError()+" ¡El volumen debe ser un número entero válido entre 0 y 150!");
             else
             {
                 handler.getPlayer().setVolume(nvolume);
                 settings.setVolume(nvolume);
-                event.reply(FormatUtil.volumeIcon(nvolume)+" Volume changed from `"+volume+"` to `"+nvolume+"`");
+                event.reply(FormatUtil.volumeIcon(nvolume)+" El volumen cambió de `"+volume+"` a `"+nvolume+"`");
             }
         }
     }

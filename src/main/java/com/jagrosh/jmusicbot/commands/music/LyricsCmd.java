@@ -36,7 +36,7 @@ public class LyricsCmd extends MusicCommand
         super(bot);
         this.name = "lyrics";
         this.arguments = "[song name]";
-        this.help = "shows the lyrics of a song";
+        this.help = "muestra las letras de una canción";
         this.aliases = bot.getConfig().getAliases(this.name);
         this.botPermissions = new Permission[]{Permission.MESSAGE_EMBED_LINKS};
     }
@@ -52,7 +52,7 @@ public class LyricsCmd extends MusicCommand
                 title = sendingHandler.getPlayer().getPlayingTrack().getInfo().title;
             else
             {
-                event.replyError("There must be music playing to use that!");
+                event.replyError("¡Debe haber música reproduciendose para hacer eso!");
                 return;
             }
         }
@@ -63,7 +63,7 @@ public class LyricsCmd extends MusicCommand
         {
             if(lyrics == null)
             {
-                event.replyError("Lyrics for `" + title + "` could not be found!" + (event.getArgs().isEmpty() ? " Try entering the song name manually (`lyrics [song name]`)" : ""));
+                event.replyError("Las letras para `" + title + "` no pudieron ser encontradas!" + (event.getArgs().isEmpty() ? " Intente ingresar el nombre de la canción manualmente (`lyrics [song name]`)" : ""));
                 return;
             }
 
@@ -73,7 +73,7 @@ public class LyricsCmd extends MusicCommand
                     .setTitle(lyrics.getTitle(), lyrics.getURL());
             if(lyrics.getContent().length()>15000)
             {
-                event.replyWarning("Lyrics for `" + title + "` found but likely not correct: " + lyrics.getURL());
+                event.replyWarning("Las letras para `" + title + "` se encontraron, pero probablemente no son las correctas: " + lyrics.getURL());
             }
             else if(lyrics.getContent().length()>2000)
             {

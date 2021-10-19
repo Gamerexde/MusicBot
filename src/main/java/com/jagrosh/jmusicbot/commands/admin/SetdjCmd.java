@@ -33,7 +33,7 @@ public class SetdjCmd extends AdminCommand
     public SetdjCmd(Bot bot)
     {
         this.name = "setdj";
-        this.help = "sets the DJ role for certain music commands";
+        this.help = "establece el rol de DJ para ciertos comandos musicales";
         this.arguments = "<rolename|NONE>";
         this.aliases = bot.getConfig().getAliases(this.name);
     }
@@ -43,26 +43,26 @@ public class SetdjCmd extends AdminCommand
     {
         if(event.getArgs().isEmpty())
         {
-            event.reply(event.getClient().getError()+" Please include a role name or NONE");
+            event.reply(event.getClient().getError()+" Incluya un nombre para el rol o pon NONE para ninguno.");
             return;
         }
         Settings s = event.getClient().getSettingsFor(event.getGuild());
         if(event.getArgs().equalsIgnoreCase("none"))
         {
             s.setDJRole(null);
-            event.reply(event.getClient().getSuccess()+" DJ role cleared; Only Admins can use the DJ commands.");
+            event.reply(event.getClient().getSuccess()+" Rol DJ despejado; Solo los administradores pueden usar los comandos de DJ.");
         }
         else
         {
             List<Role> list = FinderUtil.findRoles(event.getArgs(), event.getGuild());
             if(list.isEmpty())
-                event.reply(event.getClient().getWarning()+" No Roles found matching \""+event.getArgs()+"\"");
+                event.reply(event.getClient().getWarning()+" No se encontraron roles que coincidan con \""+event.getArgs()+"\"");
             else if (list.size()>1)
                 event.reply(event.getClient().getWarning()+FormatUtil.listOfRoles(list, event.getArgs()));
             else
             {
                 s.setDJRole(list.get(0));
-                event.reply(event.getClient().getSuccess()+" DJ commands can now be used by users with the **"+list.get(0).getName()+"** role.");
+                event.reply(event.getClient().getSuccess()+" Los comandos de DJ ahora pueden ser utilizados por usuarios con el rol **"+list.get(0).getName()+"** .");
             }
         }
     }

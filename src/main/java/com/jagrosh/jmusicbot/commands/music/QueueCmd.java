@@ -44,7 +44,7 @@ public class QueueCmd extends MusicCommand
     {
         super(bot);
         this.name = "queue";
-        this.help = "shows the current queue";
+        this.help = "muestra la cola actual";
         this.arguments = "[pagenum]";
         this.aliases = bot.getConfig().getAliases(this.name);
         this.bePlaying = true;
@@ -77,7 +77,7 @@ public class QueueCmd extends MusicCommand
             Message nowp = ah.getNowPlaying(event.getJDA());
             Message nonowp = ah.getNoMusicPlaying(event.getJDA());
             Message built = new MessageBuilder()
-                    .setContent(event.getClient().getWarning() + " There is no music in the queue!")
+                    .setContent(event.getClient().getWarning() + " ¡No hay música en la cola!")
                     .setEmbed((nowp==null ? nonowp : nowp).getEmbeds().get(0)).build();
             event.reply(built, m -> 
             {
@@ -111,8 +111,8 @@ public class QueueCmd extends MusicCommand
             sb.append(ah.getPlayer().isPaused() ? JMusicBot.PAUSE_EMOJI : JMusicBot.PLAY_EMOJI).append(" **")
                     .append(ah.getPlayer().getPlayingTrack().getInfo().title).append("**\n");
         }
-        return FormatUtil.filter(sb.append(success).append(" Current Queue | ").append(songslength)
-                .append(" entries | `").append(FormatUtil.formatTime(total)).append("` ")
+        return FormatUtil.filter(sb.append(success).append(" Cola actual | ").append(songslength)
+                .append(" elementos | `").append(FormatUtil.formatTime(total)).append("` ")
                 .append(repeatmode.getEmoji() != null ? "| "+repeatmode.getEmoji() : "").toString());
     }
 }

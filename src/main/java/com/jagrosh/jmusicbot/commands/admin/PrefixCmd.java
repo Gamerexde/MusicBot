@@ -29,7 +29,7 @@ public class PrefixCmd extends AdminCommand
     public PrefixCmd(Bot bot)
     {
         this.name = "prefix";
-        this.help = "sets a server-specific prefix";
+        this.help = "establece un prefijo específico del servidor";
         this.arguments = "<prefix|NONE>";
         this.aliases = bot.getConfig().getAliases(this.name);
     }
@@ -39,7 +39,7 @@ public class PrefixCmd extends AdminCommand
     {
         if(event.getArgs().isEmpty())
         {
-            event.replyError("Please include a prefix or NONE");
+            event.replyError("Incluya un prefijo o pon NONE para ninguno.");
             return;
         }
         
@@ -47,12 +47,12 @@ public class PrefixCmd extends AdminCommand
         if(event.getArgs().equalsIgnoreCase("none"))
         {
             s.setPrefix(null);
-            event.replySuccess("Prefix cleared.");
+            event.replySuccess("Prefijo borrado.");
         }
         else
         {
             s.setPrefix(event.getArgs());
-            event.replySuccess("Custom prefix set to `" + event.getArgs() + "` on *" + event.getGuild().getName() + "*");
+            event.replySuccess("Prefijo personalizado establecido a `" + event.getArgs() + "` en *" + event.getGuild().getName() + "*");
         }
     }
 }

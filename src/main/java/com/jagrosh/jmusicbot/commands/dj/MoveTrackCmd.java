@@ -18,7 +18,7 @@ public class MoveTrackCmd extends DJCommand
     {
         super(bot);
         this.name = "movetrack";
-        this.help = "move a track in the current queue to a different position";
+        this.help = "mover una pista en la cola actual a una posición diferente";
         this.arguments = "<from> <to>";
         this.aliases = bot.getConfig().getAliases(this.name);
         this.bePlaying = true;
@@ -33,7 +33,7 @@ public class MoveTrackCmd extends DJCommand
         String[] parts = event.getArgs().split("\\s+", 2);
         if(parts.length < 2)
         {
-            event.replyError("Please include two valid indexes.");
+            event.replyError("Incluya dos índices válidos.");
             return;
         }
 
@@ -45,13 +45,13 @@ public class MoveTrackCmd extends DJCommand
         }
         catch (NumberFormatException e)
         {
-            event.replyError("Please provide two valid indexes.");
+            event.replyError("Proporcione dos índices válidos.");
             return;
         }
 
         if (from == to)
         {
-            event.replyError("Can't move a track to the same position.");
+            event.replyError("No se puede mover una pista a la misma posición.");
             return;
         }
 
@@ -60,13 +60,13 @@ public class MoveTrackCmd extends DJCommand
         FairQueue<QueuedTrack> queue = handler.getQueue();
         if (isUnavailablePosition(queue, from))
         {
-            String reply = String.format("`%d` is not a valid position in the queue!", from);
+            String reply = String.format("`%d` no es una posición válida en la cola!", from);
             event.replyError(reply);
             return;
         }
         if (isUnavailablePosition(queue, to))
         {
-            String reply = String.format("`%d` is not a valid position in the queue!", to);
+            String reply = String.format("`%d` no es una posición válida en la cola!", to);
             event.replyError(reply);
             return;
         }
@@ -74,7 +74,7 @@ public class MoveTrackCmd extends DJCommand
         // Move the track
         QueuedTrack track = queue.moveItem(from - 1, to - 1);
         String trackTitle = track.getTrack().getInfo().title;
-        String reply = String.format("Moved **%s** from position `%d` to `%d`.", trackTitle, from, to);
+        String reply = String.format("Se ha movido **%s** de la posición `%d` hacia `%d`.", trackTitle, from, to);
         event.replySuccess(reply);
     }
 

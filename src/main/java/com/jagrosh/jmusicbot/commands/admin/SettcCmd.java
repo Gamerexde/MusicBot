@@ -33,7 +33,7 @@ public class SettcCmd extends AdminCommand
     public SettcCmd(Bot bot)
     {
         this.name = "settc";
-        this.help = "sets the text channel for music commands";
+        this.help = "establece el canal de texto para los comandos de música";
         this.arguments = "<channel|NONE>";
         this.aliases = bot.getConfig().getAliases(this.name);
     }
@@ -43,26 +43,26 @@ public class SettcCmd extends AdminCommand
     {
         if(event.getArgs().isEmpty())
         {
-            event.reply(event.getClient().getError()+" Please include a text channel or NONE");
+            event.reply(event.getClient().getError()+" Incluya el nombre de un canal de texto o pon NONE para ninguno.");
             return;
         }
         Settings s = event.getClient().getSettingsFor(event.getGuild());
         if(event.getArgs().equalsIgnoreCase("none"))
         {
             s.setTextChannel(null);
-            event.reply(event.getClient().getSuccess()+" Music commands can now be used in any channel");
+            event.reply(event.getClient().getSuccess()+" Los comandos de música ahora se pueden usar en cualquier canal.");
         }
         else
         {
             List<TextChannel> list = FinderUtil.findTextChannels(event.getArgs(), event.getGuild());
             if(list.isEmpty())
-                event.reply(event.getClient().getWarning()+" No Text Channels found matching \""+event.getArgs()+"\"");
+                event.reply(event.getClient().getWarning()+" No se encontraron canales de texto que coincidan con \""+event.getArgs()+"\"");
             else if (list.size()>1)
                 event.reply(event.getClient().getWarning()+FormatUtil.listOfTChannels(list, event.getArgs()));
             else
             {
                 s.setTextChannel(list.get(0));
-                event.reply(event.getClient().getSuccess()+" Music commands can now only be used in <#"+list.get(0).getId()+">");
+                event.reply(event.getClient().getSuccess()+" Los comandos de música ahora solo se pueden usar en <#"+list.get(0).getId()+">");
             }
         }
     }

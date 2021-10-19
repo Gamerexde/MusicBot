@@ -247,9 +247,9 @@ public class AudioHandler extends AudioEventAdapter implements AudioSendHandler
     {
         Guild guild = guild(jda);
         return new MessageBuilder()
-                .setContent(FormatUtil.filter(manager.getBot().getConfig().getSuccess()+" **Now Playing...**"))
+                .setContent(FormatUtil.filter(manager.getBot().getConfig().getSuccess()+" **Reproduciendo...**"))
                 .setEmbed(new EmbedBuilder()
-                .setTitle("No music playing")
+                .setTitle("No se esta reproduciendo música")
                 .setDescription(JMusicBot.STOP_EMOJI+" "+FormatUtil.progressBar(-1)+" "+FormatUtil.volumeIcon(audioPlayer.getVolume()))
                 .setColor(guild.getSelfMember().getColor())
                 .build()).build();
@@ -262,14 +262,14 @@ public class AudioHandler extends AudioEventAdapter implements AudioSendHandler
             long userid = getRequestMetadata().getOwner();
             AudioTrack track = audioPlayer.getPlayingTrack();
             String title = track.getInfo().title;
-            if(title==null || title.equals("Unknown Title"))
+            if(title==null || title.equals("Canción desconocida"))
                 title = track.getInfo().uri;
             return "**"+title+"** ["+(userid==0 ? "autoplay" : "<@"+userid+">")+"]"
                     + "\n" + (audioPlayer.isPaused() ? JMusicBot.PAUSE_EMOJI : JMusicBot.PLAY_EMOJI) + " "
                     + "[" + FormatUtil.formatTime(track.getDuration()) + "] "
                     + FormatUtil.volumeIcon(audioPlayer.getVolume());
         }
-        else return "No music playing " + JMusicBot.STOP_EMOJI + " " + FormatUtil.volumeIcon(audioPlayer.getVolume());
+        else return "No se esta reproduciendo música " + JMusicBot.STOP_EMOJI + " " + FormatUtil.volumeIcon(audioPlayer.getVolume());
     }
     
     // Audio Send Handler methods

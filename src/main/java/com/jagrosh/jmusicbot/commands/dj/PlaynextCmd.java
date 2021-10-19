@@ -41,7 +41,7 @@ public class PlaynextCmd extends DJCommand
         this.loadingEmoji = bot.getConfig().getLoading();
         this.name = "playnext";
         this.arguments = "<title|URL>";
-        this.help = "plays a single song next";
+        this.help = "reproduce una sola canción a continuación";
         this.aliases = bot.getConfig().getAliases(this.name);
         this.beListening = true;
         this.bePlaying = false;
@@ -52,13 +52,13 @@ public class PlaynextCmd extends DJCommand
     {
         if(event.getArgs().isEmpty() && event.getMessage().getAttachments().isEmpty())
         {
-            event.replyWarning("Please include a song title or URL!");
+            event.replyWarning("Incluya un título de canción o una URL.");
             return;
         }
         String args = event.getArgs().startsWith("<") && event.getArgs().endsWith(">") 
                 ? event.getArgs().substring(1,event.getArgs().length()-1) 
                 : event.getArgs().isEmpty() ? event.getMessage().getAttachments().get(0).getUrl() : event.getArgs();
-        event.reply(loadingEmoji+" Loading... `["+args+"]`", m -> bot.getPlayerManager().loadItemOrdered(event.getGuild(), args, new ResultHandler(m,event,false)));
+        event.reply(loadingEmoji+" Cargando... `["+args+"]`", m -> bot.getPlayerManager().loadItemOrdered(event.getGuild(), args, new ResultHandler(m,event,false)));
     }
     
     private class ResultHandler implements AudioLoadResultHandler
@@ -78,14 +78,14 @@ public class PlaynextCmd extends DJCommand
         {
             if(bot.getConfig().isTooLong(track))
             {
-                m.editMessage(FormatUtil.filter(event.getClient().getWarning()+" This track (**"+track.getInfo().title+"**) is longer than the allowed maximum: `"
+                m.editMessage(FormatUtil.filter(event.getClient().getWarning()+" La duracion de la canción (**"+track.getInfo().title+"**) es más larga que el máximo permitido: `"
                         +FormatUtil.formatTime(track.getDuration())+"` > `"+FormatUtil.formatTime(bot.getConfig().getMaxSeconds()*1000)+"`")).queue();
                 return;
             }
             AudioHandler handler = (AudioHandler)event.getGuild().getAudioManager().getSendingHandler();
             int pos = handler.addTrackToFront(new QueuedTrack(track, event.getAuthor()))+1;
-            String addMsg = FormatUtil.filter(event.getClient().getSuccess()+" Added **"+track.getInfo().title
-                    +"** (`"+FormatUtil.formatTime(track.getDuration())+"`) "+(pos==0?"to begin playing":" to the queue at position "+pos));
+            String addMsg = FormatUtil.filter(event.getClient().getSuccess()+" Se ha agregado **"+track.getInfo().title
+                    +"** (`"+FormatUtil.formatTime(track.getDuration())+"`) "+(pos==0?"y se reproducirá a continuación":" a la cola en la posición "+pos));
             m.editMessage(addMsg).queue();
         }
         
@@ -112,7 +112,7 @@ public class PlaynextCmd extends DJCommand
         public void noMatches()
         {
             if(ytsearch)
-                m.editMessage(FormatUtil.filter(event.getClient().getWarning()+" No results found for `"+event.getArgs()+"`.")).queue();
+                m.editMessage(FormatUtil.filter(event.getClient().getWarning()+" No se encontraron resultados para `"+event.getArgs()+"`.")).queue();
             else
                 bot.getPlayerManager().loadItemOrdered(event.getGuild(), "ytsearch:"+event.getArgs(), new ResultHandler(m,event,true));
         }
@@ -121,9 +121,9 @@ public class PlaynextCmd extends DJCommand
         public void loadFailed(FriendlyException throwable)
         {
             if(throwable.severity==FriendlyException.Severity.COMMON)
-                m.editMessage(event.getClient().getError()+" Error loading: "+throwable.getMessage()).queue();
+                m.editMessage(event.getClient().getError()+" Se ha producido un error al cargar: "+throwable.getMessage()).queue();
             else
-                m.editMessage(event.getClient().getError()+" Error loading track.").queue();
+                m.editMessage(event.getClient().getError()+" Se ha producido un error al cargar la canción.").queue();
         }
     }
 }
